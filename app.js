@@ -241,12 +241,10 @@ async function viewCompiler() {
             runStatus.textContent = '';
 
             try {
-                // IMPORTANT: Proxied through Cloudflare Worker in production to hide API Key
-                // Currently using direct for assignment demonstration. 
-                const response = await fetch("https://api.onlinecompiler.io/api/run-code-sync/", {
+                // Sending to our new Cloudflare Function proxy to bypass CORS and hide the API key securely!
+                const response = await fetch("/api/run", {
                     method: "POST",
                     headers: {
-                        "Authorization": "c286e40e0bcf10b830ed513645c88457", // WARNING: Exposed token. Use worker.
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({ compiler, code, input })
