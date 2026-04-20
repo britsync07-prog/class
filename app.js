@@ -98,9 +98,14 @@ async function initializeData() {
             
             formatted = formatted.replace(/#include <stdio\.h>[\s\S]*?return 0;\n\}/, cCode);
             
-            // Replace test cases blanks
-            const tCases = testCases[num] || "10\tResult\n20\tResult";
-            formatted = formatted.replace(/_{5,}\t_{5,}\n_{5,}\t_{5,}/, tCases);
+            // Replace test cases blanks vertically
+            let tCasesStr = "";
+            const tCasesRaw = testCases[num] || "10\tResult\n20\tResult";
+            tCasesRaw.split('\n').forEach((tLine, i) => {
+                const parts = tLine.split('\t');
+                tCasesStr += `Sample Input ${i+1}:\n${parts[0]}\nSample Output ${i+1}:\n${parts[1] || ''}\n\n`;
+            });
+            formatted = formatted.replace(/Test Cases:[\s\S]*$/, `Test Cases:\n\n${tCasesStr.trim()}`);
 
             generatedJSON.push({
                 id: num,
@@ -368,13 +373,13 @@ async function viewSplLab() {
             return;
         }
         container.innerHTML = list.map(q => `
-            <div class="question-card">
+            <div class="question-card" onclick="navigateTo('/subjects/spl-lab/q-${q.id}')">
                 <div class="q-header">
                     <div>
                         <div class="q-title">${q.title}</div>
                         <div class="q-desc" style="margin-top: 0.5rem; color: var(--text-secondary);">${q.question}</div>
                     </div>
-                    <button class="btn btn-blue" onclick="navigateTo('/subjects/spl-lab/q-${q.id}')">View Details</button>
+                    <button class="btn btn-blue" onclick="event.stopPropagation(); navigateTo('/subjects/spl-lab/q-${q.id}')">View Details</button>
                 </div>
             </div>
         `).join('');
