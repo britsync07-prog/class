@@ -1,3 +1,7 @@
+const appState = {
+    isAuthenticated: false
+};
+
 const solutions = {
   1: `#include <stdio.h>\n#define PI 3.14159\n\nint main() {\n    float r, area, circ;\n    scanf("%f", &r);\n    area = PI * r * r;\n    circ = 2 * PI * r;\n    printf("Area: %.2f, Circumference: %.2f\\n", area, circ);\n    return 0;\n}`,
   2: `#include <stdio.h>\n\nint main() {\n    float f, c;\n    scanf("%f", &f);\n    c = (f - 32) * 5 / 9;\n    printf("Celsius: %.2f\\n", c);\n    return 0;\n}`,
@@ -169,7 +173,7 @@ const router = async () => {
     
     if (currentPath === '') currentPath = '/';
 
-    const isLoggedIn = sessionStorage.getItem('auth') === 'true';
+    const isLoggedIn = appState.isAuthenticated;
 
     if (!isLoggedIn && currentPath !== '/login') {
         navigateTo('/login');
@@ -356,7 +360,7 @@ async function viewLogin() {
 
     const tryLogin = () => {
         if (uInput.value === 'tg' && pInput.value === '404') {
-            sessionStorage.setItem('auth', 'true');
+            appState.isAuthenticated = true;
             navigateTo('/');
         }
     };
