@@ -154,7 +154,8 @@ const router = async () => {
         { path: /^\/?$/, view: viewCompiler },
         { path: /^\/subjects\/?$/, view: viewSubjectsList },
         { path: /^\/subjects\/spl-lab\/?$/, view: viewSplLab },
-        { path: /^\/subjects\/spl-lab\/q-(\d+)\/?$/, view: viewQuestion }
+        { path: /^\/subjects\/spl-lab\/q-(\d+)\/?$/, view: viewQuestion },
+        { path: /^\/login\/?$/, view: viewLogin }
     ];
 
     let currentPath = location.pathname;
@@ -167,6 +168,13 @@ const router = async () => {
     }
     
     if (currentPath === '') currentPath = '/';
+
+    const isLoggedIn = sessionStorage.getItem('auth') === 'true';
+
+    if (!isLoggedIn && currentPath !== '/login') {
+        navigateTo('/login');
+        return;
+    }
 
     let match = routes.find(r => r.path.test(currentPath));
 
@@ -202,6 +210,13 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function updateNavUI(path) {
+    const nav = document.getElementById('main-nav');
+    if (path === '/login') {
+        nav.style.display = 'none';
+        return;
+    }
+    nav.style.display = 'flex';
+
     document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
     if (path === '/' || path === '') {
         document.querySelector('a[href="/"]').classList.add('active');
@@ -211,6 +226,60 @@ function updateNavUI(path) {
 }
 
 // --- Views ---
+async function viewLogin() {
+    const html = `
+        <div class="view active-view login-view">
+            <div class="login-container">
+                <h1 class="glitch-text">System Locked</h1>
+                <p class="subtitle">Contribute assignments to unlock or find user pass hidden</p>
+                
+                <div class="login-box">
+                    <input type="text" id="login-user" placeholder="Username" autocomplete="off">
+                    <input type="password" id="login-pass" placeholder="Password" autocomplete="off">
+                </div>
+
+                <div class="game-area" id="game-area">
+                    <button class="btn btn-blue runaway-btn" id="runaway-btn">Reveal Password</button>
+                </div>
+                
+                <button class="btn btn-red contribute-btn" onclick="alert('Send files to WhatsApp: 01515265393')">Contribute Assignments</button>
+            </div>
+        </div>
+    `;
+    document.getElementById('app-root').innerHTML = html;
+
+    const btn = document.getElementById('runaway-btn');
+    const area = document.getElementById('game-area');
+
+    btn.addEventListener('mouseenter', () => {
+        // Prevent clicking by moving it randomly
+        const maxX = area.clientWidth - btn.clientWidth;
+        const maxY = area.clientHeight - btn.clientHeight;
+        const x = Math.max(0, Math.random() * maxX);
+        const y = Math.max(0, Math.random() * maxY);
+        btn.style.left = `${x}px`;
+        btn.style.top = `${y}px`;
+        btn.style.transform = `translate(0, 0)`; // override centering
+    });
+
+    btn.addEventListener('click', () => {
+        alert("You caught it! \\n\\nUsername: tg\\nPassword: 404");
+    });
+
+    const uInput = document.getElementById('login-user');
+    const pInput = document.getElementById('login-pass');
+    
+    const tryLogin = () => {
+        if (uInput.value === 'tg' && pInput.value === '404') {
+            sessionStorage.setItem('auth', 'true');
+            navigateTo('/');
+        }
+    };
+    
+    uInput.addEventListener('input', tryLogin);
+    pInput.addEventListener('input', tryLogin);
+}
+
 async function viewCompiler() {
     const html = `
         <div class="view active-view" id="compiler-section">
