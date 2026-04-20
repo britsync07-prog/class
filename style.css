@@ -338,7 +338,7 @@ main {
     }
 }
 
-/* Login View */
+/* Cyberpunk Login View */
 .login-view {
     display: flex;
     justify-content: center;
@@ -346,32 +346,42 @@ main {
     height: 80vh;
 }
 
-.login-container {
-    background: var(--editor-bg);
+.cyber-container {
+    background: #09090b;
     color: #fff;
     padding: 3rem;
-    border-radius: 1rem;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    border-radius: 0.5rem;
+    box-shadow: 0 0 40px rgba(14, 165, 233, 0.1), inset 0 0 20px rgba(14, 165, 233, 0.05);
     text-align: center;
     width: 100%;
     max-width: 500px;
-    border: 1px solid #333;
+    border: 1px solid #1e293b;
+    position: relative;
+    overflow: hidden;
+}
+
+.cyber-container::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, #0ea5e9, transparent);
 }
 
 .glitch-text {
     font-family: monospace;
-    font-size: 2rem;
-    color: #10b981;
-    margin-bottom: 1rem;
-    text-shadow: 2px 0 #ef4444, -2px 0 #2563eb;
+    font-size: 2.2rem;
+    color: #ef4444;
+    margin-bottom: 0.5rem;
     letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
 }
 
 .subtitle {
-    color: #9ca3af;
+    color: #64748b;
     margin-bottom: 2rem;
-    font-size: 0.95rem;
-    line-height: 1.5;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    font-family: monospace;
 }
 
 .login-box {
@@ -386,41 +396,160 @@ main {
     border: 1px solid #333;
     color: #10b981;
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     font-family: monospace;
     font-size: 1rem;
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: all 0.3s;
+    text-align: center;
+    letter-spacing: 2px;
 }
 
 .login-box input:focus {
-    border-color: #10b981;
-    box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+    border-color: #0ea5e9;
+    box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);
 }
 
-.game-area {
-    position: relative;
-    height: 120px;
-    background: #0a0a0a;
-    border: 1px solid #222;
-    border-radius: 0.5rem;
-    margin-bottom: 2rem;
-    overflow: hidden;
+.login-box input:disabled {
+    background: #050505;
+    border-color: #1f2937;
+    color: #374151;
+    cursor: not-allowed;
 }
 
-.runaway-btn {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transition: top 0.15s ease-out, left 0.15s ease-out;
-    white-space: nowrap;
-}
-
-.contribute-btn {
+.cyber-btn-primary {
     width: 100%;
     padding: 1rem;
+    background: transparent;
+    color: #0ea5e9;
+    border: 1px solid #0ea5e9;
+    font-family: monospace;
     font-size: 1.1rem;
-    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 5px rgba(14, 165, 233, 0.5);
+    box-shadow: inset 0 0 10px rgba(14, 165, 233, 0.1);
+    transition: all 0.2s;
+}
+
+.cyber-btn-primary:hover {
+    background: #0ea5e9;
+    color: #000;
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
+}
+
+.cyber-btn-secondary {
+    width: 100%;
+    padding: 0.75rem;
+    background: transparent;
+    color: #64748b;
+    border: 1px solid #334155;
+    font-family: monospace;
+    font-size: 0.9rem;
     letter-spacing: 1px;
+    transition: all 0.2s;
+}
+
+.cyber-btn-secondary:hover {
+    border-color: #94a3b8;
+    color: #e2e8f0;
+}
+
+/* Memory Matrix Game */
+.game-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #1e293b;
+    border-radius: 0.5rem;
+}
+
+.matrix-header {
+    color: #0ea5e9;
+    font-family: monospace;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+}
+
+.matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.matrix-node {
+    width: 50px;
+    height: 50px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.matrix-node:hover {
+    border-color: #0ea5e9;
+}
+
+.matrix-node.flash {
+    background: #0ea5e9;
+    box-shadow: 0 0 15px #0ea5e9;
+    border-color: #0ea5e9;
+}
+
+.matrix-node.flash-player {
+    background: #10b981;
+    box-shadow: 0 0 15px #10b981;
+    border-color: #10b981;
+}
+
+.matrix-status {
+    font-family: monospace;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.shake {
+    animation: shake 0.1s ease-in-out 3;
+}
+
+/* Custom Modals */
+.cyber-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.cyber-modal {
+    background: #09090b;
+    border: 1px solid #1e293b;
+    padding: 2.5rem;
+    border-radius: 0.5rem;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }

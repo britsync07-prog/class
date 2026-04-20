@@ -225,50 +225,135 @@ function updateNavUI(path) {
     }
 }
 
+// --- Modals ---
+window.showModal = function(title, text, type = 'info') {
+    const root = document.getElementById('modal-root');
+    const color = type === 'success' ? '#10b981' : (type === 'error' ? '#ef4444' : '#0ea5e9');
+    const html = `
+        <div class="cyber-overlay" id="cyber-overlay">
+            <div class="cyber-modal" style="border-top: 4px solid ${color};">
+                <h3 style="color: ${color}; margin-bottom: 1rem; font-family: monospace; font-size: 1.5rem; letter-spacing: 1px;">[${title}]</h3>
+                <p style="color: #e5e7eb; margin-bottom: 2rem; line-height: 1.6; font-size: 1.1rem;">${text.replace(/\n/g, '<br>')}</p>
+                <button class="btn" style="background: ${color}; width: 100%; font-weight: bold; letter-spacing: 2px;" onclick="document.getElementById('modal-root').innerHTML=''">ACKNOWLEDGE</button>
+            </div>
+        </div>
+    `;
+    root.innerHTML = html;
+};
+
 // --- Views ---
 async function viewLogin() {
     const html = `
         <div class="view active-view login-view">
-            <div class="login-container">
-                <h1 class="glitch-text">System Locked</h1>
-                <p class="subtitle">Contribute assignments to unlock or find user pass hidden</p>
+            <div class="login-container cyber-container">
+                <div class="cyber-header">
+                    <h1 class="glitch-text">FIREWALL_ACTIVE</h1>
+                    <p class="subtitle">UNAUTHORIZED ACCESS DETECTED</p>
+                </div>
                 
                 <div class="login-box">
-                    <input type="text" id="login-user" placeholder="Username" autocomplete="off">
-                    <input type="password" id="login-pass" placeholder="Password" autocomplete="off">
+                    <input type="text" id="login-user" placeholder="USERNAME" autocomplete="off" disabled>
+                    <input type="password" id="login-pass" placeholder="PASSWORD" autocomplete="off" disabled>
                 </div>
 
-                <div class="game-area" id="game-area">
-                    <button class="btn btn-blue runaway-btn" id="runaway-btn">Reveal Password</button>
+                <div class="game-area" id="game-area" style="display: none;">
+                    <div class="matrix-header">MEMORY OVERRIDE REQUIRED. INITIATING...</div>
+                    <div class="matrix-grid" id="matrix-grid">
+                        ${Array.from({length: 16}).map((_, i) => `<div class="matrix-node" data-index="${i}"></div>`).join('')}
+                    </div>
+                    <div class="matrix-status" id="matrix-status">AWAITING SEQUENCE...</div>
                 </div>
                 
-                <button class="btn btn-red contribute-btn" onclick="alert('Send files to WhatsApp: 01515265393')">Contribute Assignments</button>
+                <button class="btn cyber-btn-primary" id="breach-btn">BREACH FIREWALL</button>
+                <button class="btn cyber-btn-secondary" onclick="showModal('COMMUNICATION_LINK', 'Contribute assignments directly to encrypted comms channel:\\n\\nWhatsApp: 01515265393', 'info')">CONTRIBUTE ASSIGNMENTS</button>
             </div>
         </div>
     `;
     document.getElementById('app-root').innerHTML = html;
 
-    const btn = document.getElementById('runaway-btn');
-    const area = document.getElementById('game-area');
-
-    btn.addEventListener('mouseenter', () => {
-        // Prevent clicking by moving it randomly
-        const maxX = area.clientWidth - btn.clientWidth;
-        const maxY = area.clientHeight - btn.clientHeight;
-        const x = Math.max(0, Math.random() * maxX);
-        const y = Math.max(0, Math.random() * maxY);
-        btn.style.left = `${x}px`;
-        btn.style.top = `${y}px`;
-        btn.style.transform = `translate(0, 0)`; // override centering
-    });
-
-    btn.addEventListener('click', () => {
-        alert("You caught it! \\n\\nUsername: tg\\nPassword: 404");
-    });
-
     const uInput = document.getElementById('login-user');
     const pInput = document.getElementById('login-pass');
-    
+    const breachBtn = document.getElementById('breach-btn');
+    const gameArea = document.getElementById('game-area');
+
+    let sequence = [];
+    let playerSequence = [];
+    let isPlaying = false;
+    let sequenceLength = 5;
+
+    breachBtn.addEventListener('click', () => {
+        breachBtn.style.display = 'none';
+        gameArea.style.display = 'flex';
+        // Need to query nodes AFTER game area is revealed
+        const nodes = document.querySelectorAll('.matrix-node');
+        const status = document.getElementById('matrix-status');
+
+        const startSequence = async () => {
+            isPlaying = true;
+            playerSequence = [];
+            sequence = [];
+            status.textContent = 'MEMORIZE SEQUENCE';
+            status.style.color = '#0ea5e9';
+
+            let lastNode = -1;
+            for (let i = 0; i < sequenceLength; i++) {
+                let nextNode;
+                do { nextNode = Math.floor(Math.random() * 16); } while (nextNode === lastNode);
+                sequence.push(nextNode);
+                lastNode = nextNode;
+            }
+
+            for (let i = 0; i < sequence.length; i++) {
+                await new Promise(r => setTimeout(r, 500));
+                const node = nodes[sequence[i]];
+                node.classList.add('flash');
+                await new Promise(r => setTimeout(r, 400));
+                node.classList.remove('flash');
+            }
+
+            status.textContent = 'INPUT SEQUENCE';
+            status.style.color = '#10b981';
+            isPlaying = false;
+        };
+
+        nodes.forEach(node => {
+            node.addEventListener('click', () => {
+                if (isPlaying) return;
+                const idx = parseInt(node.getAttribute('data-index'));
+                node.classList.add('flash-player');
+                setTimeout(() => node.classList.remove('flash-player'), 200);
+
+                playerSequence.push(idx);
+
+                if (playerSequence[playerSequence.length - 1] !== sequence[playerSequence.length - 1]) {
+                    status.textContent = 'BREACH FAILED. RETRYING...';
+                    status.style.color = '#ef4444';
+                    gameArea.classList.add('shake');
+                    setTimeout(() => gameArea.classList.remove('shake'), 500);
+                    isPlaying = true;
+                    setTimeout(startSequence, 1500);
+                    return;
+                }
+
+                if (playerSequence.length === sequence.length) {
+                    status.textContent = 'OVERRIDE SUCCESSFUL';
+                    status.style.color = '#10b981';
+                    isPlaying = true;
+                    setTimeout(() => {
+                        showModal('DECRYPTION SUCCESSFUL', 'Firewall breached. Credentials recovered.\\n\\nUSER: tg\\nPASS: 404', 'success');
+                        uInput.disabled = false;
+                        pInput.disabled = false;
+                        uInput.placeholder = "Enter decrypted username";
+                        pInput.placeholder = "Enter decrypted password";
+                        gameArea.style.display = 'none';
+                    }, 500);
+                }
+            });
+        });
+
+        setTimeout(startSequence, 1000);
+    });
+
     const tryLogin = () => {
         if (uInput.value === 'tg' && pInput.value === '404') {
             sessionStorage.setItem('auth', 'true');
