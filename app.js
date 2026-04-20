@@ -251,9 +251,13 @@ async function viewLogin() {
                     <p class="subtitle">UNAUTHORIZED ACCESS DETECTED</p>
                 </div>
                 
-                <div class="login-box">
-                    <input type="text" id="login-user" placeholder="USERNAME" autocomplete="off" disabled>
-                    <input type="password" id="login-pass" placeholder="PASSWORD" autocomplete="off" disabled>
+                <div class="locked-status" id="locked-status" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ef4444; background: rgba(239, 68, 68, 0.1); border-radius: 0.25rem;">
+                    <p style="color: #ef4444; font-family: monospace; letter-spacing: 2px; margin: 0;">[ INPUTS LOCKED ]</p>
+                </div>
+
+                <div class="login-box" id="login-box" style="display: none;">
+                    <input type="text" id="login-user" placeholder="USERNAME" autocomplete="off">
+                    <input type="password" id="login-pass" placeholder="PASSWORD" autocomplete="off">
                 </div>
 
                 <div class="game-area" id="game-area" style="display: none;">
@@ -343,10 +347,8 @@ async function viewLogin() {
                     firewallBreached = true;
                     setTimeout(() => {
                         showModal('DECRYPTION SUCCESSFUL', 'Firewall breached. Credentials recovered.\\n\\nUSER: tg\\nPASS: 404', 'success');
-                        uInput.disabled = false;
-                        pInput.disabled = false;
-                        uInput.placeholder = "Enter decrypted username";
-                        pInput.placeholder = "Enter decrypted password";
+                        document.getElementById('locked-status').style.display = 'none';
+                        document.getElementById('login-box').style.display = 'flex';
                         gameArea.style.display = 'none';
                     }, 500);
                 }
