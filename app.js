@@ -251,11 +251,7 @@ async function viewLogin() {
                     <p class="subtitle">UNAUTHORIZED ACCESS DETECTED</p>
                 </div>
                 
-                <div class="locked-status" id="locked-status" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ef4444; background: rgba(239, 68, 68, 0.1); border-radius: 0.25rem;">
-                    <p style="color: #ef4444; font-family: monospace; letter-spacing: 2px; margin: 0;">[ INPUTS LOCKED ]</p>
-                </div>
-
-                <div class="login-box" id="login-box" style="display: none;">
+                <div class="login-box" id="login-box">
                     <input type="text" id="login-user" placeholder="USERNAME" autocomplete="off">
                     <input type="password" id="login-pass" placeholder="PASSWORD" autocomplete="off">
                 </div>
@@ -347,8 +343,6 @@ async function viewLogin() {
                     firewallBreached = true;
                     setTimeout(() => {
                         showModal('DECRYPTION SUCCESSFUL', 'Firewall breached. Credentials recovered.\\n\\nUSER: tg\\nPASS: 404', 'success');
-                        document.getElementById('locked-status').style.display = 'none';
-                        document.getElementById('login-box').style.display = 'flex';
                         gameArea.style.display = 'none';
                     }, 500);
                 }
@@ -359,7 +353,6 @@ async function viewLogin() {
     });
 
     const tryLogin = () => {
-        if (!firewallBreached) return;
         if (uInput.value === 'tg' && pInput.value === '404') {
             appState.isAuthenticated = true;
             navigateTo('/');
