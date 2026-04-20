@@ -208,7 +208,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function updateNavUI(path) {
-    const nav = document.getElementById('main-nav');
+    const nav = document.getElementById('main-nav') || document.querySelector('.navbar');
+    if (!nav) return;
+    
     if (path === '/login') {
         nav.style.display = 'none';
         return;
