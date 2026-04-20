@@ -266,7 +266,7 @@ async function viewCompiler() {
                     outputConsole.textContent = JSON.stringify(result, null, 2);
                 }
             } catch (error) {
-                outputConsole.textContent = \`Network Error: \${error.message}\`;
+                outputConsole.textContent = `Network Error: ${error.message}`;
                 runStatus.textContent = 'Failed';
                 runStatus.className = 'error';
             } finally {
