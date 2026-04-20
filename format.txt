@@ -1,0 +1,29 @@
+Problem Name: Write a program to: _________________________________________________
+Source Code:
+C
+
+#include <stdio.h>
+#include <math.h>   // (use only if needed)
+
+int main() {
+
+    // Variable Declaration
+    ____________________________________________;
+
+    // Input
+    printf("Enter ___________________________: ");
+    scanf("___________________________", &________);
+
+    // Processing / Logic
+    ____________________________________________;
+
+    // Output
+    printf("The result is: ____________________\n");
+
+    return 0;
+}
+
+Test Cases:
+Sample Input	Sample Output
+_________________	__________________
+_________________	__________________

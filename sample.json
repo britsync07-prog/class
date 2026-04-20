@@ -1,0 +1,9 @@
+[
+  {
+    "id": 1,
+    "title": "Problem 01",
+    "question": "Write a program to find the area ($\\pi r^2$) and circumference ($2\\pi r$) of a circle.",
+    "solution": "#include <stdio.h>\n#define PI 3.14159\n\nint main() {\n    float r, area, circ;\n    scanf(\"%f\", &r);\n    area = PI * r * r;\n    circ = 2 * PI * r;\n    printf(\"Area: %.2f, Circumference: %.2f\\n\", area, circ);\n    return 0;\n}",
+    "formatted": "Problem Name: Write a program to: Write a program to find the area ($\\pi r^2$) and circumference ($2\\pi r$) of a circle.\nSource Code:\nC\n\n#include <stdio.h>\n#define PI 3.14159\n\nint main() {\n    float r, area, circ;\n    scanf(\"%f\", &r);\n    area = PI * r * r;\n    circ = 2 * PI * r;\n    printf(\"Area: %.2f, Circumference: %.2f\\n\", area, circ);\n    return 0;\n}\n\nTest Cases:\nSample Input\tSample Output\n_________________\t__________________\n_________________\t__________________\n"
+  }
+]
