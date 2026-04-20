@@ -130,13 +130,7 @@ async function initializeData() {
 }
 
 // --- Router ---
-// Determine base path (useful if hosted in a subfolder or tested locally via python http.server)
-const getBasePath = () => {
-    let path = window.location.pathname;
-    if (path.endsWith('.html')) return path.substring(0, path.lastIndexOf('/'));
-    return path.replace(/\/$/, '');
-};
-const BASE_PATH = getBasePath();
+const BASE_PATH = "";
 
 const navigateTo = url => {
     // If URL is absolute, append BASE_PATH
