@@ -81,8 +81,26 @@ async function initializeData() {
 }
 
 // --- Router ---
+// Determine base path (useful if hosted in a subfolder or tested locally via python http.server)
+const getBasePath = () => {
+    let path = window.location.pathname;
+    if (path.endsWith('.html')) return path.substring(0, path.lastIndexOf('/'));
+    return path.replace(/\/$/, '');
+};
+const BASE_PATH = getBasePath();
+
 const navigateTo = url => {
-    history.pushState(null, null, url);
+    // If URL is absolute, append BASE_PATH
+    const fullUrl = url.startsWith('/') ? BASE_PATH + url : url;
+    try {
+        if (window.location.protocol === 'file:' || window.location.hash.startsWith('#/')) {
+            throw new Error('Use Hash Routing');
+        }
+        history.pushState(null, null, fullUrl);
+    } catch (err) {
+        window.location.hash = url;
+        return;
+    }
     router();
 };
 
@@ -94,7 +112,17 @@ const router = async () => {
         { path: /^\/subjects\/spl-lab\/q-(\d+)\/?$/, view: viewQuestion }
     ];
 
-    const currentPath = location.pathname;
+    let currentPath = location.pathname;
+    
+    // Hash fallback support
+    if (location.hash && location.hash.startsWith('#/')) {
+        currentPath = location.hash.substring(1);
+    } else if (BASE_PATH && currentPath.startsWith(BASE_PATH)) {
+        currentPath = currentPath.substring(BASE_PATH.length);
+    }
+    
+    if (currentPath === '') currentPath = '/';
+
     let match = routes.find(r => r.path.test(currentPath));
 
     if (!match) {
@@ -102,18 +130,19 @@ const router = async () => {
     }
 
     const appRoot = document.getElementById('app-root');
-    appRoot.innerHTML = '<div class="loading">Loading...</div>';
+    appRoot.innerHTML = '<div class="loading" style="padding: 2rem;">Loading view...</div>';
     
     updateNavUI(currentPath);
 
     try {
         await match.view(currentPath);
     } catch (e) {
-        appRoot.innerHTML = `<div class="error">Error loading page: ${e.message}</div>`;
+        appRoot.innerHTML = `<div class="error" style="padding: 2rem; color: red;">Error loading page: ${e.message}</div>`;
     }
 };
 
 window.addEventListener("popstate", router);
+window.addEventListener("hashchange", router);
 
 document.addEventListener("DOMContentLoaded", () => {
     document.body.addEventListener("click", e => {
@@ -316,8 +345,8 @@ async function viewSplLab() {
 
 async function viewQuestion(path) {
     const data = await initializeData();
-    const match = path.match(/^\\/subjects\\/spl-lab\\/q-(\\d+)\\/?$/);
-    const id = parseInt(match[1], 10);
+    const match = path.match(/^\/subjects\/spl-lab\/q-(\d+)\/?$/);
+    const id = match ? parseInt(match[1], 10) : null;
     const q = data.find(item => item.id === id);
 
     if (!q) {
