@@ -210,11 +210,11 @@ async function viewCompiler() {
         const savedCode = localStorage.getItem('compiler_code') || "#include <stdio.h>\n\nint main() {\n    printf(\"Hello, World!\\n\");\n    return 0;\n}";
         
         // Destroy existing instance if switching back
-        if (window.editor) {
-            window.editor.dispose();
+        if (window.monacoEditor && typeof window.monacoEditor.dispose === 'function') {
+            window.monacoEditor.dispose();
         }
 
-        window.editor = monaco.editor.create(document.getElementById('editor'), {
+        window.monacoEditor = monaco.editor.create(document.getElementById('editor'), {
             value: savedCode,
             language: 'c',
             theme: 'vs-light', // Pure white background theme, syntax highlights include and strings automatically
@@ -229,7 +229,7 @@ async function viewCompiler() {
         const compilerSelect = document.getElementById('compiler-select');
 
         runBtn.addEventListener('click', async () => {
-            const code = window.editor.getValue();
+            const code = window.monacoEditor.getValue();
             const input = document.getElementById('stdin-input').value;
             const compiler = compilerSelect.value;
             localStorage.setItem('compiler_code', code); 
