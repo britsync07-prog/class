@@ -340,10 +340,13 @@ main {
 
 /* Cyberpunk Login View */
 .login-view {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    background: var(--bg-color);
+    z-index: 100;
 }
 
 .cyber-container {
@@ -415,6 +418,8 @@ main {
     border-color: #1f2937;
     color: #374151;
     cursor: not-allowed;
+    pointer-events: none;
+    user-select: none;
 }
 
 .cyber-btn-primary {

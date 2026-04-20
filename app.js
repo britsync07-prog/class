@@ -284,6 +284,7 @@ async function viewLogin() {
     let playerSequence = [];
     let isPlaying = false;
     let sequenceLength = 5;
+    let firewallBreached = false;
 
     breachBtn.addEventListener('click', () => {
         breachBtn.style.display = 'none';
@@ -343,6 +344,7 @@ async function viewLogin() {
                     status.textContent = 'OVERRIDE SUCCESSFUL';
                     status.style.color = '#10b981';
                     isPlaying = true;
+                    firewallBreached = true;
                     setTimeout(() => {
                         showModal('DECRYPTION SUCCESSFUL', 'Firewall breached. Credentials recovered.\\n\\nUSER: tg\\nPASS: 404', 'success');
                         uInput.disabled = false;
@@ -359,6 +361,7 @@ async function viewLogin() {
     });
 
     const tryLogin = () => {
+        if (!firewallBreached) return;
         if (uInput.value === 'tg' && pInput.value === '404') {
             appState.isAuthenticated = true;
             navigateTo('/');
