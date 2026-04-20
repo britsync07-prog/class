@@ -340,11 +340,13 @@ main {
 
 /* Cyberpunk Login View */
 .login-view {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 6rem); /* Accounting for main padding */
-    width: 100%;
+    background: var(--bg-color);
+    z-index: 100;
 }
 
 .cyber-container {

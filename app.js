@@ -244,7 +244,7 @@ window.showModal = function(title, text, type = 'info') {
 // --- Views ---
 async function viewLogin() {
     const html = `
-        <div class="view active-view login-view">
+        <div class="login-view">
             <div class="login-container cyber-container">
                 <div class="cyber-header">
                     <h1 class="glitch-text">FIREWALL_ACTIVE</h1>
