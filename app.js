@@ -25,6 +25,43 @@ const solutions = {
   24: `#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[100], rev[100];\n    scanf("%s", s);\n    int len = strlen(s);\n    for(int i = 0; i < len; i++) rev[i] = s[len - 1 - i];\n    rev[len] = '\\0';\n    if(strcmp(s, rev) == 0) printf("Palindrome\\n");\n    else printf("Not Palindrome\\n");\n    return 0;\n}`
 };
 
+const testCases = {
+  1: "5\tArea: 78.54, Circumference: 31.42\n10\tArea: 314.16, Circumference: 62.83",
+  2: "98.6\tCelsius: 37.00\n32\tCelsius: 0.00",
+  3: "37\tFahrenheit: 98.60\n0\tFahrenheit: 32.00",
+  4: "4\tEven\n7\tOdd",
+  5: "10 20\tMax: 20, Min: 10\n15 5\tMax: 15, Min: 5",
+  6: "5 10 15\tMax: 15, Min: 5\n20 10 5\tMax: 20, Min: 5",
+  7: "1 -5 6\tRoots: 3.00, 2.00\n1 -2 1\tRoot: 1.00",
+  8: "3\n10 20 30\tAverage: 20.00\n2\n5 15\tAverage: 10.00",
+  9: "10\t1010\n15\t1111",
+  10: "5\tSum: 15\n10\tSum: 55",
+  11: "5\tFactorial: 120\n6\tFactorial: 720",
+  12: "5\t0 1 1 2 3\n7\t0 1 1 2 3 5 8",
+  13: "10\t2 3 5 7\n20\t2 3 5 7 11 13 17 19",
+  14: "1234\tReversed: 4321\n9876\tReversed: 6789",
+  15: "123\tSum of digits: 6\n456\tSum of digits: 15",
+  16: "12.34\tInteger: 12, Fractional: 0.340000\n9.99\tInteger: 9, Fractional: 0.990000",
+  17: "2\tSum: 1.2500\n3\tSum: 1.3611",
+  18: "3\t  1\n 123\n12345\n2\t 1\n123",
+  19: "2\t4\n45\n3\t4\n45\n456",
+  20: "2\t4\n45\n3\t4\n45\n456",
+  21: "1 2 3 4 5 6 7 8 9\n9 8 7 6 5 4 3 2 1\t10 10 10\n10 10 10\n10 10 10",
+  22: "hello world\tLen1: 5, Len2: 5\nCopy: hello\nConcat: helloworld\nCompare: -1",
+  23: "hello\tVowels: 2, Consonants: 3\nworld\tVowels: 1, Consonants: 4",
+  24: "radar\tPalindrome\nhello\tNot Palindrome"
+};
+
+function cleanMath(str) {
+    return str
+        .replace(/\\\pi/g, 'π')
+        .replace(/\^2/g, '²')
+        .replace(/\\dots/g, '...')
+        .replace(/\\times/g, '×')
+        .replace(/\\frac{([^}]+)}{([^}]+)}/g, '$1 / $2')
+        .replace(/\$/g, '');
+}
+
 // --- Parser & Data Generation ---
 async function initializeData() {
     if (window.appData) return window.appData;
@@ -56,16 +93,19 @@ async function initializeData() {
             const cCode = solutions[num] || "// Solution missing";
             
             // Format insertion
-            let formatted = formatText.replace(/Write a program to:\s+_{2,}/, `Write a program to: ${desc}`);
+            const cleanDesc = cleanMath(desc);
+            let formatted = formatText.replace(/Write a program to:\s+_{2,}/, `Write a program to: ${cleanDesc}`);
             
-            // Replace C placeholder block with real code
-            // format.txt has "Source Code:\nC\n... \nTest Cases:"
-            formatted = formatted.replace(/(Source Code:\s*C\s*)[\s\S]*?(?=\nTest Cases:)/i, `$1\n${cCode}\n`);
+            formatted = formatted.replace(/#include <stdio\.h>[\s\S]*?return 0;\n\}/, cCode);
+            
+            // Replace test cases blanks
+            const tCases = testCases[num] || "10\tResult\n20\tResult";
+            formatted = formatted.replace(/_{5,}\t_{5,}\n_{5,}\t_{5,}/, tCases);
 
             generatedJSON.push({
                 id: num,
-                title: `Problem ${num < 10 ? '0' + num : num}`,
-                question: desc,
+                title: `Problem ${String(num).padStart(2, '0')}`,
+                question: cleanDesc,
                 solution: cCode,
                 formatted: formatted
             });
