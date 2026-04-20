@@ -230,9 +230,21 @@ async function viewCompiler() {
 
         runBtn.addEventListener('click', async () => {
             const code = window.monacoEditor.getValue();
-            const input = document.getElementById('stdin-input').value;
+            let input = document.getElementById('stdin-input').value;
             const compiler = compilerSelect.value;
             localStorage.setItem('compiler_code', code); 
+
+            // Smart Input Detection
+            if (!input.trim() && (code.includes('scanf') || code.includes('cin >>') || code.includes('gets(') || code.includes('fgets(') || code.includes('input('))) {
+                const requestedInput = prompt("Your code appears to require input (e.g. scanf / cin).\n\nPlease enter the required input below before it runs:");
+                if (requestedInput !== null) {
+                    input = requestedInput;
+                    document.getElementById('stdin-input').value = input;
+                } else {
+                    // User clicked cancel
+                    return;
+                }
+            }
 
             runBtn.disabled = true;
             runBtn.textContent = 'Running...';
