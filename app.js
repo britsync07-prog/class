@@ -6,27 +6,27 @@ const solutions = {
   1: `#include <stdio.h>\n#define PI 3.14159\n\nint main() {\n    float r, area, circ;\n    scanf("%f", &r);\n    area = PI * r * r;\n    circ = 2 * PI * r;\n    printf("Area: %.2f, Circumference: %.2f\\n", area, circ);\n    return 0;\n}`,
   2: `#include <stdio.h>\n\nint main() {\n    float f, c;\n    scanf("%f", &f);\n    c = (f - 32) * 5 / 9;\n    printf("Celsius: %.2f\\n", c);\n    return 0;\n}`,
   3: `#include <stdio.h>\n\nint main() {\n    float c, f;\n    scanf("%f", &c);\n    f = (c * 9 / 5) + 32;\n    printf("Fahrenheit: %.2f\\n", f);\n    return 0;\n}`,
-  4: `#include <stdio.h>\n\nint main() {\n    int n;\n    scanf("%d", &n);\n    if (n % 2 == 0) printf("Even\\n");\n    else printf("Odd\\n");\n    return 0;\n}`,
-  5: `#include <stdio.h>\n\nint main() {\n    int a, b;\n    scanf("%d %d", &a, &b);\n    if (a > b) printf("Max: %d, Min: %d\\n", a, b);\n    else printf("Max: %d, Min: %d\\n", b, a);\n    return 0;\n}`,
-  6: `#include <stdio.h>\n\nint main() {\n    int a, b, c, max, min;\n    scanf("%d %d %d", &a, &b, &c);\n    max = a; min = a;\n    if (b > max) max = b; if (b < min) min = b;\n    if (c > max) max = c; if (c < min) min = c;\n    printf("Max: %d, Min: %d\\n", max, min);\n    return 0;\n}`,
+  4: `#include <stdio.h>\n\nint main() {\n    int n;\n    scanf("%d", &n);\n    if (n % 2 == 0) {\n        printf("Even\\n");\n    } else {\n        printf("Odd\\n");\n    }\n    return 0;\n}`,
+  5: `#include <stdio.h>\n\nint main() {\n    int a, b;\n    scanf("%d %d", &a, &b);\n    if (a > b) {\n        printf("Max: %d, Min: %d\\n", a, b);\n    } else {\n        printf("Max: %d, Min: %d\\n", b, a);\n    }\n    return 0;\n}`,
+  6: `#include <stdio.h>\n\nint main() {\n    int a, b, c, max, min;\n    scanf("%d %d %d", &a, &b, &c);\n    max = a; min = a;\n    if (b > max) {\n        max = b;\n    }\n    if (b < min) {\n        min = b;\n    }\n    if (c > max) {\n        max = c;\n    }\n    if (c < min) {\n        min = c;\n    }\n    printf("Max: %d, Min: %d\\n", max, min);\n    return 0;\n}`,
   7: `#include <stdio.h>\n#include <math.h>\n\nint main() {\n    float a, b, c, d, r1, r2;\n    scanf("%f %f %f", &a, &b, &c);\n    d = b * b - 4 * a * c;\n    if (d > 0) {\n        r1 = (-b + sqrt(d)) / (2 * a);\n        r2 = (-b - sqrt(d)) / (2 * a);\n        printf("Roots: %.2f, %.2f\\n", r1, r2);\n    } else if (d == 0) {\n        r1 = -b / (2 * a);\n        printf("Root: %.2f\\n", r1);\n    } else {\n        printf("Complex roots\\n");\n    }\n    return 0;\n}`,
-  8: `#include <stdio.h>\n\nint main() {\n    int n;\n    float sum = 0, val;\n    scanf("%d", &n);\n    for(int i=0; i<n; i++) {\n        scanf("%f", &val);\n        sum += val;\n    }\n    printf("Average: %.2f\\n", sum / n);\n    return 0;\n}`,
-  9: `#include <stdio.h>\n\nint main() {\n    int n, bin[32], i = 0;\n    scanf("%d", &n);\n    if (n == 0) { printf("0\\n"); return 0; }\n    while (n > 0) {\n        bin[i++] = n % 2;\n        n /= 2;\n    }\n    for(int j = i - 1; j >= 0; j--)\n        printf("%d", bin[j]);\n    printf("\\n");\n    return 0;\n}`,
+  8: `#include <stdio.h>\n\nint main() {\n    int n;\n    float sum = 0, val;\n    scanf("%d", &n);\n    for (int i = 0; i < n; i++) {\n        scanf("%f", &val);\n        sum += val;\n    }\n    printf("Average: %.2f\\n", sum / n);\n    return 0;\n}`,
+  9: `#include <stdio.h>\n\nint main() {\n    int n, bin[32], i = 0;\n    scanf("%d", &n);\n    if (n == 0) {\n        printf("0\\n");\n        return 0;\n    }\n    while (n > 0) {\n        bin[i++] = n % 2;\n        n /= 2;\n    }\n    for (int j = i - 1; j >= 0; j--) {\n        printf("%d", bin[j]);\n    }\n    printf("\\n");\n    return 0;\n}`,
   10: `#include <stdio.h>\n\nint main() {\n    int n;\n    long long sum = 0;\n    scanf("%d", &n);\n    sum = (long long)n * (n + 1) / 2;\n    printf("Sum: %lld\\n", sum);\n    return 0;\n}`,
-  11: `#include <stdio.h>\n\nint main() {\n    int n;\n    long long fact = 1;\n    scanf("%d", &n);\n    for(int i = 1; i <= n; i++) fact *= i;\n    printf("Factorial: %lld\\n", fact);\n    return 0;\n}`,
-  12: `#include <stdio.h>\n\nint main() {\n    int n, a = 0, b = 1, c;\n    scanf("%d", &n);\n    if(n <= 0) return 0;\n    if(n == 1) { printf("%d\\n", a); return 0; }\n    printf("%d %d ", a, b);\n    for(int i = 3; i <= n; i++) {\n        c = a + b;\n        printf("%d%c", c, i == n ? '\\0' : ' ');\n        a = b;\n        b = c;\n    }\n    printf("\\n");\n    return 0;\n}`,
-  13: `#include <stdio.h>\n\nint main() {\n    int n, i, j, isPrime;\n    scanf("%d", &n);\n    for(i = 2; i <= n; i++) {\n        isPrime = 1;\n        for(j = 2; j <= i / 2; j++) {\n            if(i % j == 0) { isPrime = 0; break; }\n        }\n        if(isPrime) printf("%d ", i);\n    }\n    printf("\\n");\n    return 0;\n}`,
-  14: `#include <stdio.h>\n\nint main() {\n    int n, rev = 0;\n    scanf("%d", &n);\n    while(n != 0) {\n        rev = rev * 10 + n % 10;\n        n /= 10;\n    }\n    printf("Reversed: %d\\n", rev);\n    return 0;\n}`,
-  15: `#include <stdio.h>\n\nint main() {\n    int n, sum = 0;\n    scanf("%d", &n);\n    while(n != 0) {\n        sum += n % 10;\n        n /= 10;\n    }\n    printf("Sum of digits: %d\\n", sum);\n    return 0;\n}`,
+  11: `#include <stdio.h>\n\nint main() {\n    int n;\n    long long fact = 1;\n    scanf("%d", &n);\n    for (int i = 1; i <= n; i++) {\n        fact *= i;\n    }\n    printf("Factorial: %lld\\n", fact);\n    return 0;\n}`,
+  12: `#include <stdio.h>\n\nint main() {\n    int n, a = 0, b = 1, c;\n    scanf("%d", &n);\n    if (n <= 0) {\n        return 0;\n    }\n    if (n == 1) {\n        printf("%d\\n", a);\n        return 0;\n    }\n    printf("%d %d ", a, b);\n    for (int i = 3; i <= n; i++) {\n        c = a + b;\n        printf("%d%c", c, i == n ? '\\0' : ' ');\n        a = b;\n        b = c;\n    }\n    printf("\\n");\n    return 0;\n}`,
+  13: `#include <stdio.h>\n\nint main() {\n    int n, i, j, isPrime;\n    scanf("%d", &n);\n    for (i = 2; i <= n; i++) {\n        isPrime = 1;\n        for (j = 2; j <= i / 2; j++) {\n            if (i % j == 0) {\n                isPrime = 0;\n                break;\n            }\n        }\n        if (isPrime) {\n            printf("%d ", i);\n        }\n    }\n    printf("\\n");\n    return 0;\n}`,
+  14: `#include <stdio.h>\n\nint main() {\n    int n, rev = 0;\n    scanf("%d", &n);\n    while (n != 0) {\n        rev = rev * 10 + n % 10;\n        n /= 10;\n    }\n    printf("Reversed: %d\\n", rev);\n    return 0;\n}`,
+  15: `#include <stdio.h>\n\nint main() {\n    int n, sum = 0;\n    scanf("%d", &n);\n    while (n != 0) {\n        sum += n % 10;\n        n /= 10;\n    }\n    printf("Sum of digits: %d\\n", sum);\n    return 0;\n}`,
   16: `#include <stdio.h>\n\nint main() {\n    float num;\n    scanf("%f", &num);\n    int integerPart = (int)num;\n    float fractionalPart = num - integerPart;\n    printf("Integer: %d, Fractional: %f\\n", integerPart, fractionalPart);\n    return 0;\n}`,
-  17: `#include <stdio.h>\n\nint main() {\n    int n;\n    float sum = 0.0;\n    scanf("%d", &n);\n    for(int i = 1; i <= n; i++) {\n        sum += 1.0 / (i * i);\n    }\n    printf("Sum: %.4f\\n", sum);\n    return 0;\n}`,
-  18: `#include <stdio.h>\n\nint main() {\n    int a[3][3], b[3][3], c[3][3];\n    for(int i=0;i<3;i++) for(int j=0;j<3;j++) scanf("%d", &a[i][j]);\n    for(int i=0;i<3;i++) for(int j=0;j<3;j++) scanf("%d", &b[i][j]);\n    for(int i=0;i<3;i++) {\n        for(int j=0;j<3;j++) {\n            c[i][j] = a[i][j] + b[i][j];\n            printf("%d ", c[i][j]);\n        }\n        printf("\\n");\n    }\n    return 0;\n}`,
-  19: `#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[100];\n    scanf("%s", s);\n    int len = strlen(s);\n    for(int i = len; i > 0; i--) {\n        for(int j = 0; j < i; j++) printf("%c", s[j]);\n        printf("\\n");\n    }\n    return 0;\n}`,
-  20: `#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[100];\n    scanf("%s", s);\n    int len = strlen(s);\n    for(int i = 0; i < len; i++) {\n        for(int j = i; j < len; j++) printf("%c", s[j]);\n        printf("\\n");\n    }\n    return 0;\n}`,
-  21: `#include <stdio.h>\n\nint main() {\n    int a[3][3], b[3][3], c[3][3];\n    for(int i=0;i<3;i++) for(int j=0;j<3;j++) scanf("%d", &a[i][j]);\n    for(int i=0;i<3;i++) for(int j=0;j<3;j++) scanf("%d", &b[i][j]);\n    for(int i=0;i<3;i++) {\n        for(int j=0;j<3;j++) {\n            c[i][j] = a[i][j] + b[i][j];\n            printf("%d ", c[i][j]);\n        }\n        printf("\\n");\n    }\n    return 0;\n}`,
+  17: `#include <stdio.h>\n\nint main() {\n    int n;\n    float sum = 0.0;\n    scanf("%d", &n);\n    for (int i = 1; i <= n; i++) {\n        sum += 1.0 / (i * i);\n    }\n    printf("Sum: %.4f\\n", sum);\n    return 0;\n}`,
+  18: `#include <stdio.h>\n\nint main() {\n    int a[3][3], b[3][3], c[3][3];\n    for (int i = 0; i < 3; i++) {\n        for (int j = 0; j < 3; j++) {\n            scanf("%d", &a[i][j]);\n        }\n    }\n    for (int i = 0; i < 3; i++) {\n        for (int j = 0; j < 3; j++) {\n            scanf("%d", &b[i][j]);\n        }\n    }\n    for (int i = 0; i < 3; i++) {\n        for (int j = 0; j < 3; j++) {\n            c[i][j] = a[i][j] + b[i][j];\n            printf("%d ", c[i][j]);\n        }\n        printf("\\n");\n    }\n    return 0;\n}`,
+  19: `#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[100];\n    scanf("%s", s);\n    int len = strlen(s);\n    for (int i = len; i > 0; i--) {\n        for (int j = 0; j < i; j++) {\n            printf("%c", s[j]);\n        }\n        printf("\\n");\n    }\n    return 0;\n}`,
+  20: `#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[100];\n    scanf("%s", s);\n    int len = strlen(s);\n    for (int i = 0; i < len; i++) {\n        for (int j = i; j < len; j++) {\n            printf("%c", s[j]);\n        }\n        printf("\\n");\n    }\n    return 0;\n}`,
+  21: `#include <stdio.h>\n\nint main() {\n    int a[3][3], b[3][3], c[3][3];\n    for (int i = 0; i < 3; i++) {\n        for (int j = 0; j < 3; j++) {\n            scanf("%d", &a[i][j]);\n        }\n    }\n    for (int i = 0; i < 3; i++) {\n        for (int j = 0; j < 3; j++) {\n            scanf("%d", &b[i][j]);\n        }\n    }\n    for (int i = 0; i < 3; i++) {\n        for (int j = 0; j < 3; j++) {\n            c[i][j] = a[i][j] + b[i][j];\n            printf("%d ", c[i][j]);\n        }\n        printf("\\n");\n    }\n    return 0;\n}`,
   22: `#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s1[100], s2[100], s3[200];\n    scanf("%s %s", s1, s2);\n    printf("Len1: %lu, Len2: %lu\\n", strlen(s1), strlen(s2));\n    strcpy(s3, s1);\n    printf("Copy: %s\\n", s3);\n    strcat(s3, s2);\n    printf("Concat: %s\\n", s3);\n    printf("Compare: %d\\n", strcmp(s1, s2));\n    return 0;\n}`,
-  23: `#include <stdio.h>\n#include <ctype.h>\n#include <string.h>\n\nint main() {\n    char s[200];\n    int v = 0, c = 0;\n    fgets(s, sizeof(s), stdin);\n    for(int i = 0; s[i] != '\\0'; i++) {\n        char ch = tolower(s[i]);\n        if(ch >= 'a' && ch <= 'z') {\n            if(ch=='a'||ch=='e'||ch=='i'||ch=='o'||ch=='u') v++;\n            else c++;\n        }\n    }\n    printf("Vowels: %d, Consonants: %d\\n", v, c);\n    return 0;\n}`,
-  24: `#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[100], rev[100];\n    scanf("%s", s);\n    int len = strlen(s);\n    for(int i = 0; i < len; i++) rev[i] = s[len - 1 - i];\n    rev[len] = '\\0';\n    if(strcmp(s, rev) == 0) printf("Palindrome\\n");\n    else printf("Not Palindrome\\n");\n    return 0;\n}`
+  23: `#include <stdio.h>\n#include <ctype.h>\n#include <string.h>\n\nint main() {\n    char s[200];\n    int v = 0, c = 0;\n    fgets(s, sizeof(s), stdin);\n    for (int i = 0; s[i] != '\\0'; i++) {\n        char ch = tolower(s[i]);\n        if (ch >= 'a' && ch <= 'z') {\n            if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {\n                v++;\n            } else {\n                c++;\n            }\n        }\n    }\n    printf("Vowels: %d, Consonants: %d\\n", v, c);\n    return 0;\n}`,
+  24: `#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[100], rev[100];\n    scanf("%s", s);\n    int len = strlen(s);\n    for (int i = 0; i < len; i++) {\n        rev[i] = s[len - 1 - i];\n    }\n    rev[len] = '\\0';\n    if (strcmp(s, rev) == 0) {\n        printf("Palindrome\\n");\n    } else {\n        printf("Not Palindrome\\n");\n    }\n    return 0;\n}`
 };
 
 const testCases = {
@@ -620,14 +620,14 @@ async function viewQuestion(path) {
                 <div class="tc-box">
                     <div class="tc-box-header">
                         <span>Input</span>
-                        <button class="btn-copy-small" onclick="copyToClipboard(\`${tc.input.replace(/`/g, '\\`')}\`, this)">Copy</button>
+                        <button class="btn-copy-small js-copy-btn" data-copy-type="input" data-case-index="${i}">Copy</button>
                     </div>
                     <pre class="tc-content">${tc.input}</pre>
                 </div>
                 <div class="tc-box">
                     <div class="tc-box-header">
                         <span>Output</span>
-                        <button class="btn-copy-small" onclick="copyToClipboard(\`${tc.output.replace(/`/g, '\\`')}\`, this)">Copy</button>
+                        <button class="btn-copy-small js-copy-btn" data-copy-type="output" data-case-index="${i}">Copy</button>
                     </div>
                     <pre class="tc-content">${tc.output}</pre>
                 </div>
@@ -678,7 +678,7 @@ async function viewQuestion(path) {
                 <section class="q-section">
                     <div class="section-header-row">
                         <h3 class="section-title">Sample Solution (C)</h3>
-                        <button class="btn-copy-small" onclick="copyToClipboard(\`${q.solution.replace(/`/g, '\\`')}\`, this)">Copy Solution</button>
+                        <button class="btn-copy-small js-copy-btn" data-copy-type="solution">Copy Solution</button>
                     </div>
                     <div class="solution-box card">
                         <pre class="code-highlight">${highlightCode(q.solution)}</pre>
@@ -689,18 +689,29 @@ async function viewQuestion(path) {
     `;
     document.getElementById('app-root').innerHTML = html;
 
-    // Helper for clipboard
-    window.copyToClipboard = (text, btn) => {
-        navigator.clipboard.writeText(text).then(() => {
-            const originalText = btn.textContent;
-            btn.textContent = 'Copied!';
-            btn.classList.add('copied');
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.classList.remove('copied');
-            }, 2000);
+    // Attach Event Listeners for Copy Buttons
+    document.querySelectorAll('.js-copy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const type = btn.getAttribute('data-copy-type');
+            let text = "";
+            if (type === 'solution') {
+                text = q.solution;
+            } else {
+                const idx = parseInt(btn.getAttribute('data-case-index'));
+                text = q.testCases[idx][type];
+            }
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
         });
-    };
+    });
 
     document.getElementById('btn-run-compiler').addEventListener('click', () => {
         localStorage.setItem('compiler_code', q.solution); 
@@ -708,12 +719,13 @@ async function viewQuestion(path) {
     });
 
     document.getElementById('btn-download-pdf').addEventListener('click', () => {
-        if (!window.jspdf) {
-            alert('PDF library is not loaded yet.');
+        const jsPDFLib = window.jspdf ? window.jspdf.jsPDF : window.jsPDF;
+        if (!jsPDFLib) {
+            alert('PDF library (jsPDF) failed to load. Please check your connection or refresh.');
             return;
         }
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
+        
+        const doc = new jsPDFLib();
         
         doc.setFontSize(16);
         doc.setTextColor(37, 99, 235);
