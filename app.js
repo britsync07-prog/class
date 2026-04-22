@@ -30,30 +30,69 @@ const solutions = {
 };
 
 const testCases = {
-  1: "4.5\tArea: 63.62, Circumference: 28.27",
-  2: "67\tCelsius: 19.44",
-  3: "37\tFahrenheit: 98.60\n0\tFahrenheit: 32.00",
-  4: "4\tEven\n7\tOdd",
-  5: "10 20\tMax: 20, Min: 10\n15 5\tMax: 15, Min: 5",
-  6: "5 10 15\tMax: 15, Min: 5\n20 10 5\tMax: 20, Min: 5",
-  7: "1 -5 6\tRoots: 3.00, 2.00\n1 -2 1\tRoot: 1.00",
-  8: "6\n6 8 10 18.57 25 35\tAverage: 17.10",
-  9: "10\t1010\n15\t1111",
-  10: "75\tSum: 2850",
-  11: "5\tFactorial: 120\n6\tFactorial: 720",
-  12: "10\t0 1 1 2 3 5 8 13 21 34",
-  13: "10\t2 3 5 7\n20\t2 3 5 7 11 13 17 19",
-  14: "1234\tReversed: 4321\n9876\tReversed: 6789",
-  15: "123\tSum of digits: 6\n456\tSum of digits: 15",
-  16: "12.34\tInteger: 12, Fractional: 0.340000\n9.99\tInteger: 9, Fractional: 0.990000",
-  17: "2\tSum: 1.2500\n3\tSum: 1.3611",
-  18: "1 2 3 4 5 6 7 8 9\n9 8 7 6 5 4 3 2 1\t10 10 10\n10 10 10\n10 10 10",
-  19: "4567\t4567\n456\n45\n4",
-  20: "4567\t4567\n567\n67\n7",
-  21: "1 2 3 4 5 6 7 8 9\n9 8 7 6 5 4 3 2 1\t10 10 10\n10 10 10\n10 10 10",
-  22: "Bangla desh\tLen1: 6, Len2: 4\nCopy: Bangla\nConcat: Bangladesh\nCompare: -1",
-  23: "Bangladesh is my mother land.\tVowels: 7, Consonants: 17",
-  24: "radar\tPalindrome\nhello\tNot Palindrome"
+  1: [{ input: "4.5", output: "Area: 63.62, Circumference: 28.27" }],
+  2: [{ input: "67", output: "Celsius: 19.44" }],
+  3: [
+    { input: "37", output: "Fahrenheit: 98.60" },
+    { input: "0", output: "Fahrenheit: 32.00" }
+  ],
+  4: [
+    { input: "4", output: "Even" },
+    { input: "7", output: "Odd" }
+  ],
+  5: [
+    { input: "10 20", output: "Max: 20, Min: 10" },
+    { input: "15 5", output: "Max: 15, Min: 5" }
+  ],
+  6: [
+    { input: "5 10 15", output: "Max: 15, Min: 5" },
+    { input: "20 10 5", output: "Max: 20, Min: 5" }
+  ],
+  7: [
+    { input: "1 -5 6", output: "Roots: 3.00, 2.00" },
+    { input: "1 -2 1", output: "Root: 1.00" }
+  ],
+  8: [{ input: "6\n6 8 10 18.57 25 35", output: "Average: 17.10" }],
+  9: [
+    { input: "10", output: "1010" },
+    { input: "15", output: "1111" }
+  ],
+  10: [{ input: "75", output: "Sum: 2850" }],
+  11: [
+    { input: "5", output: "Factorial: 120" },
+    { input: "6", output: "Factorial: 720" }
+  ],
+  12: [{ input: "10", output: "0 1 1 2 3 5 8 13 21 34" }],
+  13: [
+    { input: "10", output: "2 3 5 7" },
+    { input: "20", output: "2 3 5 7 11 13 17 19" }
+  ],
+  14: [
+    { input: "1234", output: "Reversed: 4321" },
+    { input: "9876", output: "Reversed: 6789" }
+  ],
+  15: [
+    { input: "123", output: "Sum of digits: 6" },
+    { input: "456", output: "Sum of digits: 15" }
+  ],
+  16: [
+    { input: "12.34", output: "Integer: 12, Fractional: 0.340000" },
+    { input: "9.99", output: "Integer: 9, Fractional: 0.990000" }
+  ],
+  17: [
+    { input: "2", output: "Sum: 1.2500" },
+    { input: "3", output: "Sum: 1.3611" }
+  ],
+  18: [{ input: "1 2 3 4 5 6 7 8 9\n9 8 7 6 5 4 3 2 1", output: "10 10 10\n10 10 10\n10 10 10" }],
+  19: [{ input: "4567", output: "4567\n456\n45\n4" }],
+  20: [{ input: "4567", output: "4567\n567\n67\n7" }],
+  21: [{ input: "1 2 3 4 5 6 7 8 9\n9 8 7 6 5 4 3 2 1", output: "10 10 10\n10 10 10\n10 10 10" }],
+  22: [{ input: "Bangla desh", output: "Len1: 6, Len2: 4\nCopy: Bangla\nConcat: Bangladesh\nCompare: -1" }],
+  23: [{ input: "Bangladesh is my mother land.", output: "Vowels: 7, Consonants: 17" }],
+  24: [
+    { input: "radar", output: "Palindrome" },
+    { input: "hello", output: "Not Palindrome" }
+  ]
 };
 
 function cleanMath(str) {
@@ -104,10 +143,9 @@ async function initializeData() {
             
             // Replace test cases blanks vertically
             let tCasesStr = "";
-            const tCasesRaw = testCases[num] || "10\tResult\n20\tResult";
-            tCasesRaw.split('\n').forEach((tLine, i) => {
-                const parts = tLine.split('\t');
-                tCasesStr += `Sample Input ${i+1}:\n${parts[0]}\nSample Output ${i+1}:\n${parts[1] || ''}\n\n`;
+            const currentTestCases = testCases[num] || [{ input: "10", output: "Result" }];
+            currentTestCases.forEach((tCase, i) => {
+                tCasesStr += `Sample Input ${i+1}:\n${tCase.input}\nSample Output ${i+1}:\n${tCase.output}\n\n`;
             });
             formatted = formatted.replace(/Test Cases:[\s\S]*$/, `Test Cases:\n\n${tCasesStr.trim()}`);
 
@@ -116,6 +154,7 @@ async function initializeData() {
                 title: `Problem ${String(num).padStart(2, '0')}`,
                 question: cleanDesc,
                 solution: cCode,
+                testCases: currentTestCases,
                 formatted: formatted
             });
         });
@@ -561,41 +600,107 @@ async function viewQuestion(path) {
         return;
     }
 
-    // Custom coloring logic
-    const tempDiv = document.createElement('div');
-    tempDiv.textContent = q.formatted;
-    let safeHTML = tempDiv.innerHTML;
-    
-    safeHTML = safeHTML
-        .replace(/#include/g, '<span style="color: var(--btn-blue); font-weight: bold;">#include</span>')
-        .replace(/&lt;.*?&gt;/g, match => `<span style="color: var(--btn-red);">${match}</span>`);
+    // Syntax highlighting for the solution
+    const highlightCode = (code) => {
+        return code
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"(.*?)"/g, '<span style="color: #059669;">"$1"</span>') // Strings
+            .replace(/\b(int|float|char|double|void|return|if|else|for|while|do|switch|case|break|continue|struct|typedef|static|const|sizeof)\b/g, '<span style="color: #2563eb; font-weight: bold;">$1</span>') // Keywords
+            .replace(/(#include|#define|#ifdef|#ifndef|#endif)/g, '<span style="color: #7c3aed; font-weight: bold;">$1</span>') // Preprocessor
+            .replace(/(&lt;.*?&gt;)/g, '<span style="color: #d97706;">$1</span>') // Headers
+            .replace(/(\/\/.*)/g, '<span style="color: #9ca3af; font-style: italic;">$1</span>'); // Comments
+    };
+
+    const testCasesHTML = q.testCases.map((tc, i) => `
+        <div class="test-case-item">
+            <div class="tc-label">Sample Case ${i + 1}</div>
+            <div class="tc-grid">
+                <div class="tc-box">
+                    <div class="tc-box-header">
+                        <span>Input</span>
+                        <button class="btn-copy-small" onclick="copyToClipboard(\`${tc.input.replace(/`/g, '\\`')}\`, this)">Copy</button>
+                    </div>
+                    <pre class="tc-content">${tc.input}</pre>
+                </div>
+                <div class="tc-box">
+                    <div class="tc-box-header">
+                        <span>Output</span>
+                        <button class="btn-copy-small" onclick="copyToClipboard(\`${tc.output.replace(/`/g, '\\`')}\`, this)">Copy</button>
+                    </div>
+                    <pre class="tc-content">${tc.output}</pre>
+                </div>
+            </div>
+        </div>
+    `).join('');
 
     const html = `
         <div class="view active-view question-detail-view">
-            <div class="breadcrumb" style="margin-bottom: 2rem;">
-                <a href="/subjects" data-link>Subjects</a> > 
-                <a href="/subjects/spl-lab" data-link>SPL Lab</a> > 
+            <div class="breadcrumb">
+                <a href="/subjects" data-link>Subjects</a> &gt; 
+                <a href="/subjects/spl-lab" data-link>SPL Lab</a> &gt; 
                 ${q.title}
             </div>
             
-            <div class="q-header-large" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                <h2>${q.title}</h2>
-                <div class="q-actions" style="display: flex; gap: 1rem;">
-                    <button class="btn btn-blue" id="btn-run-compiler">Run in Compiler</button>
-                    <button class="btn btn-red" id="btn-download-pdf">Download PDF</button>
+            <div class="q-detail-container">
+                <div class="q-main-header">
+                    <div class="q-title-group">
+                        <span class="q-id-badge">#${q.id}</span>
+                        <h2>${q.title}</h2>
+                    </div>
+                    <div class="q-actions">
+                        <button class="btn btn-blue" id="btn-run-compiler">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            Run Code
+                        </button>
+                        <button class="btn btn-red" id="btn-download-pdf">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            PDF
+                        </button>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="q-question-text" style="font-size: 1.1rem; margin-bottom: 2rem; padding: 1.5rem; background: var(--nav-bg); border-radius: 0.5rem; border: 1px solid var(--border-color);">
-                <strong>Question:</strong> ${q.question}
-            </div>
-            
-            <div class="q-formatted-answer">
-                <div class="q-code-preview" style="background: white; border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 0.5rem; font-family: monospace; white-space: pre-wrap; font-size: 0.9rem; overflow-x: auto; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">${safeHTML}</div>
+
+                <section class="q-section">
+                    <h3 class="section-title">Problem Statement</h3>
+                    <div class="q-statement card">
+                        ${q.question}
+                    </div>
+                </section>
+
+                <section class="q-section">
+                    <h3 class="section-title">Sample Test Cases</h3>
+                    <div class="test-cases-container">
+                        ${testCasesHTML}
+                    </div>
+                </section>
+
+                <section class="q-section">
+                    <div class="section-header-row">
+                        <h3 class="section-title">Sample Solution (C)</h3>
+                        <button class="btn-copy-small" onclick="copyToClipboard(\`${q.solution.replace(/`/g, '\\`')}\`, this)">Copy Solution</button>
+                    </div>
+                    <div class="solution-box card">
+                        <pre class="code-highlight">${highlightCode(q.solution)}</pre>
+                    </div>
+                </section>
             </div>
         </div>
     `;
     document.getElementById('app-root').innerHTML = html;
+
+    // Helper for clipboard
+    window.copyToClipboard = (text, btn) => {
+        navigator.clipboard.writeText(text).then(() => {
+            const originalText = btn.textContent;
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.classList.remove('copied');
+            }, 2000);
+        });
+    };
 
     document.getElementById('btn-run-compiler').addEventListener('click', () => {
         localStorage.setItem('compiler_code', q.solution); 
@@ -611,7 +716,7 @@ async function viewQuestion(path) {
         const doc = new jsPDF();
         
         doc.setFontSize(16);
-        doc.setTextColor(37, 99, 235); // Blue
+        doc.setTextColor(37, 99, 235);
         doc.text(q.title, 14, 20);
         
         doc.setFontSize(12);
@@ -623,7 +728,6 @@ async function viewQuestion(path) {
         doc.setTextColor(75, 85, 99);
         const splitCode = doc.splitTextToSize(q.formatted, 180);
         
-        // Pagination
         let y = 35 + (splitDesc.length * 6);
         let pageHeight = doc.internal.pageSize.height;
         
